@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:chakracore-8.11.1
+        environment: 
+           SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)      
     working_directory: ~/repo
     steps:
       - checkout
@@ -18,8 +20,7 @@ jobs:
           command: |
             cp index.php index.php_$SHORT_HASH
             scp -r -o StrictHostKeyChecking=no index.php* ec2-user@54.147.236.31:/home/ec2-user
-          environment: 
-             SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
+
       - run:
           name: AWS EC2 deploy
           command: |
