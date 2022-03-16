@@ -16,7 +16,8 @@ jobs:
       - run:
           name: AWS EC2 Copy
           command: |
-            scp -r -o StrictHostKeyChecking=no index.php ec2-user@54.147.236.31:/home/ec2-user/index.php
+            cp index.php index.php_$CIRCLE_SHA1
+            scp -r -o StrictHostKeyChecking=no index.php* ec2-user@54.147.236.31:/home/ec2-user
       - run:
           name: AWS EC2 deploy
           command: |
