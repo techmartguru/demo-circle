@@ -13,10 +13,12 @@ jobs:
       - run:
           name: Adding host to knownhost
           command: ssh-keyscan -H 54.147.236.31 >> ~/.ssh/known_hosts
+          environment:
+            GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
       - run:
           name: AWS EC2 Copy
           command: |
-            cp index.php index.php_$CIRCLE_SHA1
+            cp index.php index.php_$GIT_HASH
             scp -r -o StrictHostKeyChecking=no index.php* ec2-user@54.147.236.31:/home/ec2-user
       - run:
           name: AWS EC2 deploy
