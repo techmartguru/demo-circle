@@ -18,7 +18,8 @@ jobs:
       - run:
           name: AWS EC2 Copy
           command: |
-            cp index.php index.php_$SHORT_HASH
+            echo '$SHORT_HASH'
+            #cp index.php index.php_$SHORT_HASH
             scp -r -o StrictHostKeyChecking=no index.php* ec2-user@54.147.236.31:/home/ec2-user
 
       - run:
