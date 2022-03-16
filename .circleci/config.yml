@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:chakracore-8.11.1
-        environment: 
-           SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)      
+    environment: 
+       SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)      
     working_directory: ~/repo
     steps:
       - checkout
