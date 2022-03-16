@@ -16,13 +16,15 @@ jobs:
       - run:
           name: AWS EC2 Copy
           command: |
-            cp index.php index.php_$CIRCLE_SHA1_SHORT
+            cp index.php index.php_$SHORT_HASH
             scp -r -o StrictHostKeyChecking=no index.php* ec2-user@54.147.236.31:/home/ec2-user
+          environment: 
+             SHORT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
       - run:
           name: AWS EC2 deploy
           command: |
             ssh ec2-user@54.147.236.31 'sudo cp /home/ec2-user/index.php /usr/share/nginx/html/index.php && rm -rf /home/ec2-user/index.php > dev/null &'
-            echo "deployment done"
+            echo "$SHORT_HASH"
 
 
 workflows:
